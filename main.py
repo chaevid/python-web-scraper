@@ -1,13 +1,5 @@
-from random import randint
-
-user_choice = int(input("Choose number :  "))
-pc_choice = randint(1, 50)
-
-if user_choice == pc_choice:
-    print("You win!")
-elif user_choice > pc_choice:
-    print("Lower! Computer chose: ", pc_choice)
-    user_choice = int(input("Choose number :  "))
-else:
-    print("Higher! Computer chose: ", pc_choice)
-    user_choice = int(input("Choose number :  "))
+distance = 0
+while distance < 20:
+    print("I'm running : ", distance, "km")
+    distance += 1
+print("I'm tired :")
