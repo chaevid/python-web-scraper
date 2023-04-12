@@ -1,10 +1,13 @@
-age = int(input("your age ?"))
+from random import randint
 
-if age < 18:
-    print("No drink")
-elif age >= 18 & age <= 35:
-    print("You drink beer!")
-elif age == 60 | age == 70:
-    print("Birthday party!")
+user_choice = int(input("Choose number :  "))
+pc_choice = randint(1, 50)
+
+if user_choice == pc_choice:
+    print("You win!")
+elif user_choice > pc_choice:
+    print("Lower! Computer chose: ", pc_choice)
+    user_choice = int(input("Choose number :  "))
 else:
-    print("Go ahead")
+    print("Higher! Computer chose: ", pc_choice)
+    user_choice = int(input("Choose number :  "))
