@@ -1,15 +1,11 @@
-from random import randint
-print("Welcome to the Python Casino!\nGuess a number between 1 and 100")
+days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri"]
 
-pc_choice = randint(1, 100)
-user_choice = int(input(f"Choose number : "))
+print(days_of_week)
 
-while user_choice != pc_choice:
-    print("Lower!") if (user_choice > pc_choice) else print("Higher!")
-    # if (user_choice > pc_choice):
-    #     print("Lower!")
-    # else:
-    #     print("Higher!")
-    user_choice = int(input("Choose number :  "))
+days_of_week.append("Sat")
 
-print("You win!")
+print(days_of_week)
+
+days_of_week.append("Sun")
+
+print(days_of_week)
