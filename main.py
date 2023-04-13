@@ -1,22 +1,28 @@
-from requests import get
+playing = True
 
-results = {}
+# a = int(input("Choose a number:\n"))
+# b = int(input("Choose another one:\n"))
+# operation = input(
+#     "Choose an operation:\n    Options are: + , - , * or /.\n    Write 'exit' to finish.\n"
+# )
 
-websites = ("google.com", "airbnb.com", "https://twitter.com",
-            "facebook.com", "https://youtube.com")
-
-for website in websites:
-    if not website.startswith("https://"):
-        website = f"https://{website}"
-    response_code = (get(website).status_code)
-
-    if response_code >= 200 & response_code < 300:
-        results[website] = "Success"
-    elif response_code >= 300 & response_code < 400:
-        results[website] = "Redirect"
-    elif response_code >= 400 & response_code < 500:
-        results[website] = "Client Error"
+# add your code here!
+while playing:
+    a = int(input("Choose a number:\n"))
+    b = int(input("Choose another one:\n"))
+    operation = input(
+        "Choose an operation:\n    Options are: + , - , * or /.\n    Write 'exit' to finish.\n"
+    )
+    if operation == "+":
+        print(f"Result : {a+b}")
+    elif operation == "-":
+        print(f"Result : {a-b}")
+    elif operation == "*":
+        print(f"Result : {a*b}")
+    elif operation == "/":
+        print(f"Result : {a/b}")
+    elif operation == "exit":
+        playing = False
     else:
-        results[website] = "Server Error"
-
-print(results)
+        print(
+            "Choose an appropriate operaion.\nTry again from the beginning.")
