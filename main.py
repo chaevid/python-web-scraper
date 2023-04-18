@@ -9,6 +9,7 @@ if response.status_code != 200:
     print(f"Failed to get jobs. Status code: {response.status_code}")
     # raise Exception("Failed to get jobs")
 else:
+    results = []
     soup = BeautifulSoup(response.text, "html.parser")
     jobs = soup.find_all('section', class_='jobs')
     for job_section in jobs:
@@ -19,5 +20,12 @@ else:
             anchor = anchors[1]
             company, kind, region = anchor.find_all('span', class_='company')
             title = anchor.find('span', class_='title')
-            print(company, kind, region, title)
-            print("//////////////////////////\n//////////////////////////")
+            job_data = {
+                'company': company.string,
+                'region': region.string,
+                'position': title.string,
+            }
+            results.append(job_data)
+    for result in results:
+        print(result)
+        print("////////")
