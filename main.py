@@ -1,31 +1,28 @@
-from requests import get
 from bs4 import BeautifulSoup
+import requests
 
-base_url = "https://weworkremotely.com/remote-jobs/search?&term="
-search_term = "python"
 
-response = get(f"{base_url}{search_term}")
-if response.status_code != 200:
-    print(f"Failed to get jobs. Status code: {response.status_code}")
-    # raise Exception("Failed to get jobs")
-else:
-    results = []
-    soup = BeautifulSoup(response.text, "html.parser")
-    jobs = soup.find_all('section', class_='jobs')
-    for job_section in jobs:
-        job_posts = job_section.find_all('li')
-        job_posts.pop(-1)
-        for post in job_posts:
-            anchors = post.find_all('a')
-            anchor = anchors[1]
-            company, kind, region = anchor.find_all('span', class_='company')
-            title = anchor.find('span', class_='title')
-            job_data = {
-                'company': company.string,
-                'region': region.string,
-                'position': title.string,
-            }
-            results.append(job_data)
-    for result in results:
-        print(result)
-        print("////////")
+def extract_job_info(job_element):
+    job_title = job_element.find("h2", {"itemprop": "title"}).get_text()
+    company_name = job_element.find("h3", {"itemprop": "name"}).get_text()
+    job_url = "https://remoteok.com" + job_element.find(
+        "a", {"itemprop": "url"})["href"]
+    return {"title": job_title, "company": company_name, "url": job_url}
+
+
+def extract_jobs(term):
+    url = f"https://remoteok.com/remote-{term}-jobs"
+    request = requests.get(url, headers={"User-Agent": "Kimchi"})
+    if request.status_code == 200:
+        soup = BeautifulSoup(request.text, "html.parser")
+        job_elements = soup.find_all("tr", {"class": "job"})
+        jobs = [extract_job_info(job_element) for job_element in job_elements]
+        for job in jobs:
+            print(
+                f"Job Title: {job['title']}\nCompany: {job['company']}\nURL: {job['url']}\n"
+            )
+    else:
+        print("Can't get jobs.")
+
+
+extract_jobs("rust")
