@@ -18,9 +18,11 @@ else:
         for post in job_posts:
             anchors = post.find_all('a')
             anchor = anchors[1]
+            link = anchor['href']
             company, kind, region = anchor.find_all('span', class_='company')
             title = anchor.find('span', class_='title')
             job_data = {
+                'link': f"https://weworkremotely.com{link}",
                 'company': company.string,
                 'region': region.string,
                 'position': title.string,
